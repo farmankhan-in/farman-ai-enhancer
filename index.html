@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Farman AI Photo Enhancer</title>
+
+  <meta name="description"
+        content="Upload your photos to Farman AI Photo Enhancer.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #10101b;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      padding: 22px 10px;
+      background: #1c1c2e;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    header span {
+      color: #a78bfa;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.3;
+    }
+
+    p {
+      color: #c5c5d6;
+      line-height: 1.7;
+    }
+
+    .upload-box {
+      margin-top: 30px;
+      padding: 30px 15px;
+      border: 2px dashed #8b5cf6;
+      border-radius: 20px;
+      background: #1c1c2e;
+    }
+
+    input {
+      display: none;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 12px 5px;
+      padding: 15px 24px;
+      border: none;
+      border-radius: 10px;
+      background: #8b5cf6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button:active {
+      transform: scale(0.98);
+    }
+
+    #preview {
+      display: none;
+      max-width: 100%;
+      max-height: 400px;
+      margin-top: 20px;
+      border-radius: 12px;
+    }
+
+    #status {
+      margin-top: 18px;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      padding: 30px 10px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    ✨ Farman <span>AI Enhance</span>
+  </header>
+
+  <main class="container">
+
+    <h1>Make Your Photos Better!</h1>
+
+    <p>
+      Upload your photo and start your photo
+      enhancement journey.
+    </p>
+
+    <div class="upload-box">
+
+      <h2>📸 Upload Your Photo</h2>
+
+      <p>Choose a photo from your mobile.</p>
+
+      <label for="photo" class="button">
+        Select Photo
+      </label>
+
+      <input
+        type="file"
+        id="photo"
+        accept="image/*"
+      >
+
+      <br>
+
+      <img id="preview" alt="Selected photo preview">
+
+      <br>
+
+      <button
+        id="download"
+        class="button"
+        hidden
+        type="button"
+      >
+        Download Photo
+      </button>
+
+      <p id="status">
+        Your photo will appear here.
+      </p>
+
+      <p class="note">
+        AI enhancement will be connected in the next step.
+      </p>
+
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 Farman AI Enhance
+  </footer>
+
+  <script>
+    const photoInput = document.getElementById("photo");
+    const preview = document.getElementById("preview");
+    const download = document.getElementById("download");
+    const status = document.getElementById("status");
+
+    let currentImageURL = "";
+
+    photoInput.addEventListener("change", function () {
+      const file = this.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        status.textContent = "Please select a valid image.";
+        return;
+      }
+
+      if (currentImageURL) {
+        URL.revokeObjectURL(currentImageURL);
+      }
+
+      currentImageURL = URL.createObjectURL(file);
+
+      preview.src = currentImageURL;
+      preview.style.display = "inline-block";
+
+      download.hidden = false;
+
+      status.textContent =
+        "Photo uploaded successfully!";
+
+      download.onclick = function () {
+        const link = document.createElement("a");
+
+        link.href = currentImageURL;
+        link.download = "farman-photo.jpg";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      };
+    });
+  </script>
+
+</body>
+</html>
